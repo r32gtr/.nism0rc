@@ -1,0 +1,83 @@
+set nocompatible              " required
+filetype off                  " required
+
+set mouse=a
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/Documents/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle'
+
+" call plugins here
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-airline/vim-airline'
+"Plugin 'davidhalter/jedi-vim'"
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Set encoding to utf-8
+set encoding=utf-8
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space>, za
+
+" PEP-8 Indentation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
+" Making vim pretty
+let python_highlight_all=1
+syntax on
+
+" current line highlight "
+set cursorline
+:highlight Cursorline cterm=bold ctermbg=black
+
+" enable highlight search pattern "
+set hlsearch 
+
+set nu
+
+set backspace=indent,eol,start
+
+"highlight python and self function
+"autocmd BufEnter * syntax match Type /\v\.[a-zA-Z0-9_]+\ze(\[|\s|$|,|\]|\)|\.|:)/hs=s+1
+"autocmd BufEnter * syntax match pythonFunction /\v[[:alnum:]_]+\ze(\s?\()/
+"hi def link pythonFunction Function
+"autocmd BufEnter * syn match Self "\(\W\|^\)\@<=self\(\.\)\@="
+"highlight self ctermfg=239
+
+" highlight matching brackets  "
+set showmatch 
+
+autocmd FileType python map <buffer> <space><leader> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <space><leader> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+
+set linebreak
+map <C-w> :set wrap!<CR>
+
+set formatoptions-=t
+
+" enable smartcase search sensitivity "
+set ignorecase
+set smartcase
+
+set omnifunc=syntaxcomplete#Complete
+
+" line memory "
+set viminfo='100,<1000,s100,h
